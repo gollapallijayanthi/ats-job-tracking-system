@@ -260,23 +260,26 @@ rq worker default
 
 ---
 
+
 ## 🧪 **Postman Collection**
 
-A complete Postman collection is included in the repository:
+A complete Postman collection is included in this repository.
 
-ats-job-tracking-system/postman/ATS-Backend-Collection.json
-📁 **postman/ATS-Backend-Collection.json**
+📁 **Direct File Link:**
+👉 **[postman/ATS-Backend-Collection.json](https://github.com/gollapallijayanthi/ats-job-tracking-system/blob/main/postman/ATS-Backend-Collection.json)**
 
-You can import this file directly into Postman to test:
+You can import this JSON file into Postman to quickly test all API endpoints:
 
-✔ Signup
-✔ Login
-✔ Create jobs
-✔ Apply for jobs
-✔ Update stages
-✔ View applications
+✔ User Signup
+✔ User Login
+✔ Create Jobs
+✔ Apply for Jobs
+✔ Update Application Stage
+✔ View Applications
 
 ---
+
+
 
 ## 📌 **Sample Jobs For Testing**
 
