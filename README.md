@@ -1,6 +1,17 @@
 # 📌 **ATS – Job Application Tracking System (Backend)**
 
-A production-style backend that handles job listings, applications, authentication, role-based access, workflow stages, and background processing using Redis + RQ.
+A production-grade backend API for managing job listings, user authentication, applications, role-based permissions, workflow stages, and background job processing using Redis + RQ.
+Designed with clean architecture, database migrations, and scalable patterns used in real-world ATS systems.
+
+---
+
+## 🏷️ **Project Badges**
+
+![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge)
+![Alembic](https://img.shields.io/badge/Migrations-Alembic-blue?style=for-the-badge)
+![Redis](https://img.shields.io/badge/Redis-RQ-red?style=for-the-badge)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.12+-yellow?style=for-the-badge)
 
 ---
 
@@ -17,6 +28,7 @@ A production-style backend that handles job listings, applications, authenticati
 * [RQ Worker (Background Jobs)](#-rq-worker-background-jobs)
 * [Postman Collection](#-postman-collection)
 * [Sample Jobs](#-sample-jobs-for-testing)
+* [Screenshots](#-screenshots-optional)
 * [License](#-license)
 
 ---
@@ -39,8 +51,8 @@ A production-style backend that handles job listings, applications, authenticati
 
 ### 📄 Job & Application Management
 
-* Job CRUD
-* Candidates can apply
+* Create, list, and manage jobs
+* Candidates can apply for jobs
 * Recruiters/Admins can update application stage
 
 ### 🔄 Application Workflow (State Machine)
@@ -51,14 +63,14 @@ applied → screening → interview → offer → hired / rejected
 
 ### 📬 Background Jobs (Redis + RQ)
 
-* Sends email/notification tasks
-* Non-blocking operations
-* Runs in separate worker process
+* Runs notification/email tasks
+* Non-blocking heavy operations
+* Worker service runs separately
 
 ### 🛢 Database Versioning (Alembic)
 
-* Safe schema migrations
-* Version-controlled database
+* All schema changes tracked
+* Safe upgrades/downgrades
 
 ---
 
@@ -103,7 +115,7 @@ applied → screening → interview → offer → hired / rejected
 | Database          | SQLite     |
 | ORM               | SQLAlchemy |
 | Migrations        | Alembic    |
-| Auth              | JWT        |
+| Authentication    | JWT        |
 | Background Jobs   | Redis + RQ |
 | Server            | Uvicorn    |
 
@@ -141,7 +153,7 @@ ats-backend/
 
 ## 📘 **API Overview**
 
-### 🔐 **Auth Routes**
+### 🔐 Auth Routes
 
 | Method | Endpoint           | Description       |
 | ------ | ------------------ | ----------------- |
@@ -150,7 +162,7 @@ ats-backend/
 
 ---
 
-### 💼 **Job Routes**
+### 💼 Job Routes
 
 | Method | Endpoint     | Role            | Description    |
 | ------ | ------------ | --------------- | -------------- |
@@ -159,7 +171,7 @@ ats-backend/
 
 ---
 
-### 📝 **Application Routes**
+### 📝 Application Routes
 
 | Method | Endpoint                       | Role            | Description      |
 | ------ | ------------------------------ | --------------- | ---------------- |
@@ -171,7 +183,7 @@ ats-backend/
 
 ## 🔧 **Environment Variables**
 
-Create a `.env` file:
+Create a `.env` file in project root:
 
 ```
 SECRET_KEY=your-secret-key
@@ -191,17 +203,21 @@ REDIS_URL=redis://localhost:6379/0
 .venv\Scripts\activate
 ```
 
-### 2️⃣ Start API server
+### 2️⃣ Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+### 3️⃣ Start the server
 
 ```
 uvicorn app.main:app --reload
 ```
 
-### 3️⃣ API Documentation
+### 4️⃣ API Documentation (Swagger)
 
-**Swagger UI:**
-
-➡️ [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+👉 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ---
 
@@ -213,7 +229,7 @@ uvicorn app.main:app --reload
 alembic revision --autogenerate -m "your message"
 ```
 
-### Apply migration
+### Apply all migrations
 
 ```
 alembic upgrade head
@@ -236,7 +252,7 @@ alembic upgrade head
 redis-server
 ```
 
-### Start Worker
+### Start worker
 
 ```
 rq worker default
@@ -246,11 +262,18 @@ rq worker default
 
 ## 🧪 **Postman Collection**
 
-You can test all endpoints easily using Postman.
+A complete Postman collection is included in the repository:
 
-If you want a *ready-made Postman JSON* just say:
+📁 **postman/ATS-Backend-Collection.json**
 
-👉 **"Generate Postman Collection JSON"**
+You can import this file directly into Postman to test:
+
+✔ Signup
+✔ Login
+✔ Create jobs
+✔ Apply for jobs
+✔ Update stages
+✔ View applications
 
 ---
 
@@ -262,11 +285,23 @@ If you want a *ready-made Postman JSON* just say:
 | Frontend Engineer | WebWorks | open   |
 | Data Analyst      | DataPlus | open   |
 
-Run using:
+Create via:
 
 ```
 POST /api/jobs/
 ```
+
+---
+
+## 🖼️ **Screenshots (Optional)**
+
+You may include screenshots such as:
+
+* Swagger UI
+* Postman results
+* Application workflow
+
+*(Add your images here when available.)*
 
 ---
 
@@ -278,12 +313,10 @@ This project is licensed under the **MIT License**.
 
 ## 🎉 Final Notes
 
-This ATS backend includes:
+This ATS backend demonstrates:
 
 ✔ Real-world architecture
-✔ State machine logic
-✔ Background job queue
-✔ Database versioning
-✔ Modular clean code
-
-
+✔ Workflow/state machine logic
+✔ Background job queues
+✔ Database migration discipline
+✔ Clean modular code
