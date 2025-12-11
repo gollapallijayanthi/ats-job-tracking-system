@@ -1,112 +1,117 @@
-📌 ATS – Job Application Tracking System (Backend)
+# 📌 **ATS – Job Application Tracking System (Backend)**
 
 A production-style backend that handles job listings, applications, authentication, role-based access, workflow stages, and background processing using Redis + RQ.
 
-🌟 Table of Contents
+---
 
-Features
+## 🌟 **Table of Contents**
 
-Architecture Diagram
+* [Features](#-features)
+* [Architecture Diagram](#-architecture-diagram)
+* [Tech Stack](#-tech-stack)
+* [Directory Structure](#-directory-structure)
+* [API Overview](#-api-overview)
+* [Environment Variables](#-environment-variables)
+* [Running the Project](#-running-the-project)
+* [Database Migrations](#-database-migrations)
+* [RQ Worker (Background Jobs)](#-rq-worker-background-jobs)
+* [Postman Collection](#-postman-collection)
+* [Sample Jobs](#-sample-jobs-for-testing)
+* [License](#-license)
 
-Tech Stack
+---
 
-Directory Structure
+## 🚀 **Features**
 
-API Overview
+### 🔐 Authentication
 
-Environment Variables
+* JWT-based secure login & signup
+* Password hashing
+* Token expiration support
 
-Running the Project
+### 🧑‍💼 Role-Based Access Control
 
-Database Migrations
+| Role          | Permissions                |
+| ------------- | -------------------------- |
+| **candidate** | Browse jobs, apply         |
+| **recruiter** | Manage jobs & applications |
+| **admin**     | Full access                |
 
-RQ Worker (Background Jobs)
+### 📄 Job & Application Management
 
-Postman Collection
+* Job CRUD
+* Candidates can apply
+* Recruiters/Admins can update application stage
 
-Sample Jobs
+### 🔄 Application Workflow (State Machine)
 
-License
+```
+applied → screening → interview → offer → hired / rejected
+```
 
-🚀 Features
-🔐 Authentication
+### 📬 Background Jobs (Redis + RQ)
 
-JWT-based secure login & signup
+* Sends email/notification tasks
+* Non-blocking operations
+* Runs in separate worker process
 
-Password hashing
+### 🛢 Database Versioning (Alembic)
 
-Token expiration support
+* Safe schema migrations
+* Version-controlled database
 
-🧑‍💼 Role-Based Access Control
+---
 
-candidate — can browse jobs, apply
+## 🏛️ **Architecture Diagram**
 
-recruiter — manages jobs & applications
-
-admin — full access
-
-📄 Job & Application Management
-
-Job CRUD
-
-Candidates can apply
-
-Recruiters/Admins can update application stage
-
-🔄 Application Workflow (State Machine)
-applied → screening → interview → offer → hired/rejected
-
-📬 Background Jobs (Redis + RQ)
-
-Sends email/notification tasks
-
-Non-blocking operations
-
-Separate worker process
-
-🛢 Database & Migrations (Alembic)
-
-Version-controlled schema
-
-Safe upgrades/downgrades
-
-🏛️ Architecture Diagram
+```
                    ┌───────────────────────┐
-                   │       Frontend        │
+                   │        Frontend       │
                    └───────────┬───────────┘
                                │ HTTP/JSON
                                ▼
                     ┌──────────────────────┐
-                    │       FastAPI        │
-                    │  (app/main.py)       │
+                    │        FastAPI       │
+                    │     (main app)       │
                     └───────────┬──────────┘
                                 │
-         ┌──────────────────────┼────────────────────────┐
-         ▼                      ▼                        ▼
- ┌───────────────┐      ┌───────────────┐       ┌─────────────────┐
- │ Authentication │      │ Application   │       │ Background Jobs │
- │   (JWT)        │      │  Workflow     │       │   (RQ Worker)   │
- └───────┬────────┘      └───────┬──────┘       └────────┬────────┘
-         │                        │                      │
-         ▼                        ▼                      ▼
- ┌───────────────┐       ┌───────────────┐     ┌──────────────────┐
- │   Users Table  │       │ Applications  │     │      Redis        │
- └───────────────┘       └───────────────┘     └──────────────────┘
-                     ┌────────────────────────┐
-                     │ SQLite (dev.db)        │
-                     │ Alembic Migrations     │
-                     └────────────────────────┘
+     ┌──────────────────────────┼───────────────────────────┐
+     ▼                          ▼                           ▼
+┌──────────────┐       ┌────────────────┐         ┌────────────────────┐
+│ Authentication│       │ Application    │         │   Background Jobs  │
+│    (JWT)      │       │   Workflow     │         │     (RQ Worker)    │
+└───────┬───────┘       └───────┬────────┘         └──────────┬─────────┘
+        │                       │                             │
+        ▼                       ▼                             ▼
+┌──────────────┐       ┌────────────────┐          ┌────────────────────┐
+│   Users DB   │       │ Applications DB│          │       Redis         │
+└──────────────┘       └────────────────┘          └────────────────────┘
 
-🧰 Tech Stack
-Component	Technology
-Backend Framework	FastAPI
-Database	SQLite (dev)
-ORM	SQLAlchemy
-Migrations	Alembic
-Authentication	JWT
-Background Processing	Redis + RQ
-Server	Uvicorn
-📂 Directory Structure
+             ┌──────────────────────────────────────────┐
+             │              SQLite (dev.db)              │
+             │           Alembic Migrations              │
+             └──────────────────────────────────────────┘
+```
+
+---
+
+## 🧰 **Tech Stack**
+
+| Component         | Technology |
+| ----------------- | ---------- |
+| Backend Framework | FastAPI    |
+| Database          | SQLite     |
+| ORM               | SQLAlchemy |
+| Migrations        | Alembic    |
+| Auth              | JWT        |
+| Background Jobs   | Redis + RQ |
+| Server            | Uvicorn    |
+
+---
+
+## 📂 **Directory Structure**
+
+```
 ats-backend/
 │── app/
 │   ├── main.py
@@ -130,89 +135,155 @@ ats-backend/
 │── alembic.ini
 │── requirements.txt
 │── README.md
+```
 
-📘 API Overview
-🔐 Auth Routes
-Method	Endpoint	Description
-POST	/api/auth/signup	Create new user
-POST	/api/auth/login	Login & get JWT
-💼 Job Routes
-Method	Endpoint	Role	Description
-GET	/api/jobs/	all	Fetch all jobs
-POST	/api/jobs/	recruiter/admin	Create job
-📝 Application Routes
-Method	Endpoint	Role	Description
-POST	/api/jobs/{job_id}/apply	candidate	Apply for job
-GET	/api/applications/{id}	recruiter/admin	View application
-PATCH	/api/applications/{id}/stage	recruiter/admin	Update stage
-🔧 Environment Variables
+---
 
-Create a .env file:
+## 📘 **API Overview**
 
+### 🔐 **Auth Routes**
+
+| Method | Endpoint           | Description       |
+| ------ | ------------------ | ----------------- |
+| POST   | `/api/auth/signup` | Create a new user |
+| POST   | `/api/auth/login`  | Login & get JWT   |
+
+---
+
+### 💼 **Job Routes**
+
+| Method | Endpoint     | Role            | Description    |
+| ------ | ------------ | --------------- | -------------- |
+| GET    | `/api/jobs/` | all             | Fetch all jobs |
+| POST   | `/api/jobs/` | recruiter/admin | Create job     |
+
+---
+
+### 📝 **Application Routes**
+
+| Method | Endpoint                       | Role            | Description      |
+| ------ | ------------------------------ | --------------- | ---------------- |
+| POST   | `/api/jobs/{job_id}/apply`     | candidate       | Apply for job    |
+| GET    | `/api/applications/{id}`       | recruiter/admin | View application |
+| PATCH  | `/api/applications/{id}/stage` | recruiter/admin | Update stage     |
+
+---
+
+## 🔧 **Environment Variables**
+
+Create a `.env` file:
+
+```
 SECRET_KEY=your-secret-key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 DATABASE_URL=sqlite:///./dev.db
 REDIS_URL=redis://localhost:6379/0
+```
 
-▶️ Running the Project
-1️⃣ Activate virtual environment
+---
+
+## ▶️ **Running the Project**
+
+### 1️⃣ Activate virtual environment
+
+```
 .venv\Scripts\activate
+```
 
-2️⃣ Start API server
+### 2️⃣ Start API server
+
+```
 uvicorn app.main:app --reload
+```
 
-3️⃣ Open API docs
+### 3️⃣ API Documentation
 
-Swagger UI:
+**Swagger UI:**
 
-http://127.0.0.1:8000/docs
+➡️ [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-🧱 Database Migrations
-Create revision
+---
+
+## 🧱 **Database Migrations**
+
+### Create a new migration
+
+```
 alembic revision --autogenerate -m "your message"
+```
 
-Apply migration
+### Apply migration
+
+```
 alembic upgrade head
+```
 
-If DB already exists
+### If DB already exists
+
+```
 alembic stamp head
 alembic upgrade head
+```
 
-🧵 RQ Worker (Background Jobs)
-Start Redis server
+---
+
+## 🧵 **RQ Worker (Background Jobs)**
+
+### Start Redis
+
+```
 redis-server
+```
 
-Start worker
+### Start Worker
+
+```
 rq worker default
+```
 
-🧪 Postman Collection
+---
 
-You can quickly test endpoints using a Postman collection:
+## 🧪 **Postman Collection**
 
-Import these endpoints manually
+You can test all endpoints easily using Postman.
 
-Or I can provide a ready Postman JSON file → just say:
-“Generate Postman Collection JSON.”
+If you want a *ready-made Postman JSON* just say:
 
-📌 Sample Jobs For Testing
-Title	Company	Status
-Backend Developer	TechCorp	open
-Frontend Engineer	WebWorks	open
-Data Analyst	DataPlus	open
+👉 **"Generate Postman Collection JSON"**
 
-Use POST /api/jobs/ to create these if needed.
+---
 
-📄 License
+## 📌 **Sample Jobs For Testing**
 
-MIT License
+| Title             | Company  | Status |
+| ----------------- | -------- | ------ |
+| Backend Developer | TechCorp | open   |
+| Frontend Engineer | WebWorks | open   |
+| Data Analyst      | DataPlus | open   |
 
+Run using:
 
+```
+POST /api/jobs/
+```
 
-This ATS backend implements:
+---
+
+## 📄 **License**
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 🎉 Final Notes
+
+This ATS backend includes:
 
 ✔ Real-world architecture
 ✔ State machine logic
 ✔ Background job queue
 ✔ Database versioning
 ✔ Modular clean code
+
+
