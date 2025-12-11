@@ -264,6 +264,7 @@ rq worker default
 
 A complete Postman collection is included in the repository:
 
+ats-job-tracking-system/postman/ATS-Backend-Collection.json
 📁 **postman/ATS-Backend-Collection.json**
 
 You can import this file directly into Postman to test:
