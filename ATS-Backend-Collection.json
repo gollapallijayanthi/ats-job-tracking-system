@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "ATS Backend - Postman Collection",
+    "_postman_id": "b6c7f9e0-0000-4d3a-9f0a-000000000000",
+    "description": "Collection for testing the ATS (Job Application Tracking System) backend.\nUse the environment variable {{base_url}} (e.g. http://127.0.0.1:8000) and {{jwt_token}} for auth.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"candidate@example.com\",\n  \"password\": \"strongpassword\",\n  \"full_name\": \"Candidate Name\",\n  \"role\": \"candidate\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/signup",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "signup"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"candidate@example.com\",\n  \"password\": \"strongpassword\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Jobs - Get all jobs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/jobs/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "jobs",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Jobs - Create job (recruiter/admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"company_id\": 1,\n  \"title\": \"Backend Developer\",\n  \"description\": \"Work on backend APIs\",\n  \"status\": \"open\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/jobs/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "jobs",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Applications - Apply to job (candidate)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"resume_url\": \"https://example.com/resume.pdf\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/jobs/:job_id/apply",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "jobs",
+            ":job_id",
+            "apply"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Applications - Get application by id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/applications/:id",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            ":id"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Applications - Update application stage (recruiter/admin)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stage\": \"screening\",\n  \"notes\": \"Initial screening passed\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/applications/:id/stage",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            ":id",
+            "stage"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Health - Root /",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      }
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
