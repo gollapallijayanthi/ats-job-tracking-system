@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy==2.0.45
+alembic
+psycopg2-binary
+python-dotenv
+passlib[bcrypt]
+pyjwt
+rq
+redis
+python-multipart
+email-validator
+httpx

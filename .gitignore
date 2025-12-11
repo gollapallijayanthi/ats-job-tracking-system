@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+# Virtual Environment
+.venv/
+venv/
+# Local DB
+dev.db
+*.sqlite3
+*.db
+# Env variables
+.env
+.env.*
+# Alembic backups
+alembic/versions/*.py.bak
+# OS junk
+.DS_Store
+Thumbs.db
