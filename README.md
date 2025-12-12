@@ -1,21 +1,11 @@
-# 📌 **ATS – Job Application Tracking System (Backend)**
+# **ATS – Job Application Tracking System (Backend)**
 
 A production-grade backend API for managing job listings, user authentication, applications, role-based permissions, workflow stages, and background job processing using Redis + RQ.
 Designed with clean architecture, database migrations, and scalable patterns used in real-world ATS systems.
 
 ---
 
-## 🏷️ **Project Badges**
-
-![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge)
-![Alembic](https://img.shields.io/badge/Migrations-Alembic-blue?style=for-the-badge)
-![Redis](https://img.shields.io/badge/Redis-RQ-red?style=for-the-badge)
-![JWT](https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge)
-![Python](https://img.shields.io/badge/Python-3.12+-yellow?style=for-the-badge)
-
----
-
-## 🌟 **Table of Contents**
+## **Table of Contents**
 
 * [Features](#-features)
 * [Architecture Diagram](#-architecture-diagram)
@@ -33,15 +23,15 @@ Designed with clean architecture, database migrations, and scalable patterns use
 
 ---
 
-## 🚀 **Features**
+##  **Features**
 
-### 🔐 Authentication
+###  Authentication
 
 * JWT-based secure login & signup
 * Password hashing
 * Token expiration support
 
-### 🧑‍💼 Role-Based Access Control
+###  Role-Based Access Control
 
 | Role          | Permissions                |
 | ------------- | -------------------------- |
@@ -49,32 +39,32 @@ Designed with clean architecture, database migrations, and scalable patterns use
 | **recruiter** | Manage jobs & applications |
 | **admin**     | Full access                |
 
-### 📄 Job & Application Management
+###  Job & Application Management
 
 * Create, list, and manage jobs
 * Candidates can apply for jobs
 * Recruiters/Admins can update application stage
 
-### 🔄 Application Workflow (State Machine)
+###  Application Workflow (State Machine)
 
 ```
 applied → screening → interview → offer → hired / rejected
 ```
 
-### 📬 Background Jobs (Redis + RQ)
+###  Background Jobs (Redis + RQ)
 
 * Runs notification/email tasks
 * Non-blocking heavy operations
 * Worker service runs separately
 
-### 🛢 Database Versioning (Alembic)
+###  Database Versioning (Alembic)
 
 * All schema changes tracked
 * Safe upgrades/downgrades
 
 ---
 
-## 🏛️ **Architecture Diagram**
+##  **Architecture Diagram**
 
 ```
                    ┌───────────────────────┐
@@ -107,7 +97,7 @@ applied → screening → interview → offer → hired / rejected
 
 ---
 
-## 🧰 **Tech Stack**
+##  **Tech Stack**
 
 | Component         | Technology |
 | ----------------- | ---------- |
@@ -121,7 +111,7 @@ applied → screening → interview → offer → hired / rejected
 
 ---
 
-## 📂 **Directory Structure**
+##  **Directory Structure**
 
 ```
 ats-backend/
@@ -151,9 +141,9 @@ ats-backend/
 
 ---
 
-## 📘 **API Overview**
+##  **API Overview**
 
-### 🔐 Auth Routes
+###  Auth Routes
 
 | Method | Endpoint           | Description       |
 | ------ | ------------------ | ----------------- |
@@ -162,7 +152,7 @@ ats-backend/
 
 ---
 
-### 💼 Job Routes
+###  Job Routes
 
 | Method | Endpoint     | Role            | Description    |
 | ------ | ------------ | --------------- | -------------- |
@@ -171,7 +161,7 @@ ats-backend/
 
 ---
 
-### 📝 Application Routes
+###  Application Routes
 
 | Method | Endpoint                       | Role            | Description      |
 | ------ | ------------------------------ | --------------- | ---------------- |
@@ -181,7 +171,7 @@ ats-backend/
 
 ---
 
-## 🔧 **Environment Variables**
+##  **Environment Variables**
 
 Create a `.env` file in project root:
 
@@ -195,33 +185,33 @@ REDIS_URL=redis://localhost:6379/0
 
 ---
 
-## ▶️ **Running the Project**
+##  **Running the Project**
 
-### 1️⃣ Activate virtual environment
+### 1️ Activate virtual environment
 
 ```
 .venv\Scripts\activate
 ```
 
-### 2️⃣ Install dependencies
+### 2️ Install dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Start the server
+### 3️ Start the server
 
 ```
 uvicorn app.main:app --reload
 ```
 
-### 4️⃣ API Documentation (Swagger)
+### 4️ API Documentation (Swagger)
 
-👉 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+ [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ---
 
-## 🧱 **Database Migrations**
+##  **Database Migrations**
 
 ### Create a new migration
 
@@ -244,7 +234,7 @@ alembic upgrade head
 
 ---
 
-## 🧵 **RQ Worker (Background Jobs)**
+##  **RQ Worker (Background Jobs)**
 
 ### Start Redis
 
@@ -262,12 +252,12 @@ rq worker default
 
 
 
-## 🧪 **Postman Collection**
+##  **Postman Collection**
 
 A complete Postman collection is included in the repository.
 
-📁 **Direct File Link:**
-👉 **[ATS-Backend-Collection.json](https://github.com/gollapallijayanthi/ats-job-tracking-system/blob/main/ATS-Backend-Collection.json)**
+ **Direct File Link:**
+ **[ATS-Backend-Collection.json](https://github.com/gollapallijayanthi/ats-job-tracking-system/blob/main/ATS-Backend-Collection.json)**
 
 You can import this file directly into Postman to test all API endpoints:
 
@@ -284,7 +274,7 @@ You can import this file directly into Postman to test all API endpoints:
 
 
 
-## 📌 **Sample Jobs For Testing**
+##  **Sample Jobs For Testing**
 
 | Title             | Company  | Status |
 | ----------------- | -------- | ------ |
@@ -300,7 +290,7 @@ POST /api/jobs/
 
 ---
 
-## 🖼️ **Screenshots (Optional)**
+##  **Screenshots (Optional)**
 
 You may include screenshots such as:
 
@@ -312,18 +302,18 @@ You may include screenshots such as:
 
 ---
 
-## 📄 **License**
+##  **License**
 
 This project is licensed under the **MIT License**.
 
 ---
 
-## 🎉 Final Notes
+##  Final Notes
 
 This ATS backend demonstrates:
 
-✔ Real-world architecture
-✔ Workflow/state machine logic
-✔ Background job queues
-✔ Database migration discipline
-✔ Clean modular code
+* Real-world architecture
+* Workflow/state machine logic
+* Background job queues
+* Database migration discipline
+* Clean modular code
